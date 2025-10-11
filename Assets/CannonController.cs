@@ -25,7 +25,7 @@ public class CannonController : MonoBehaviour
         }
     }
 
-    private void TryShoot()
+    public void TryShoot()
     {
         Debug.Log("Попытка выстрела...");
 

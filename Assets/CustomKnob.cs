@@ -17,6 +17,8 @@ public class DoorAngleTracker : MonoBehaviour
     private ValueChangeEvent m_OnValueChange = new ValueChangeEvent();
     public ValueChangeEvent onValueChange => m_OnValueChange;
 
+    [SerializeField] private Vector3 rotationAxis = Vector3.up;
+
     [SerializeField]
     private bool useLimits = false;
     [SerializeField]
@@ -58,8 +60,8 @@ public class DoorAngleTracker : MonoBehaviour
                 hingeJoint.extendedLimits = true;
                 hingeJoint.useLimits = true;
                 
-                limits.max = 0;
-                limits.min = -1 * (360 - (totalAngle + 100) % 360);
+                limits.max = 360 + (minAngle % 360);
+                limits.min = minAngle % 360;
                 hingeJoint.limits = limits; 
             }
             else
@@ -85,13 +87,26 @@ public class DoorAngleTracker : MonoBehaviour
 
         m_OnValueChange.Invoke(delta);
 
-        Debug.Log($"Общий угол поворота: {totalAngle:F2}°");
+        Debug.Log($"Общий угол поворота: {totalAngle:F2}° delta: {delta}");
     }
 
+    Vector3 forward;
     float GetHingeAngle()
     {
         Vector3 axis = hingeJoint.axis.normalized;
-        Vector3 forward = transform.forward;
+
+        if (rotationAxis == Vector3.right)
+        {
+            forward = transform.right;
+        }
+        else if (rotationAxis == Vector3.up)
+        {
+            forward = transform.up;
+        }
+        else if (rotationAxis == Vector3.forward)
+        {
+            forward = transform.forward;
+        }
 
         Vector3 projectedForward = Vector3.ProjectOnPlane(forward, axis).normalized;
         Vector3 referenceForward = Vector3.ProjectOnPlane(transform.parent.forward, axis).normalized;
