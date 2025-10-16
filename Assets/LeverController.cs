@@ -27,5 +27,3 @@ public class LeverController : MonoBehaviour
         return normalizedAngle;
     }
 }
-
-//asdf

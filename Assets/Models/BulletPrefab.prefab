@@ -309,7 +309,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CollisionDetected
   particleSystemExplotion: {fileID: 6580893200944691650, guid: de6f0891c3981cd4c902ddaa6bbf220b,
     type: 3}
+<<<<<<< HEAD
+  particleSystemSmoke: {fileID: 2237899560653055049, guid: f2523ee40e066d14ea5c6ff1b926edee,
+=======
   particleSystemSmoke: {fileID: 6580893200944691650, guid: de6f0891c3981cd4c902ddaa6bbf220b,
+>>>>>>> 91c4f1f4834e7205701a2b2250b12d3edd10b5ae
     type: 3}
   explosionRadius: 5
   explosionForce: 1000
