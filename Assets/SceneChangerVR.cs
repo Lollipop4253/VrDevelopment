@@ -7,14 +7,19 @@ public class SceneChangerVR : MonoBehaviour
 
     public void OnActivate()
     {
-        // Находим объект персонажа по имени
         GameObject playerSetup = GameObject.Find("XR Interaction Setup (MP Variant)");
 
         if (playerSetup != null)
         {
-            Transform child = playerSetup.transform.Find("Locomotion");
-            child.gameObject.SetActive(false);
-            playerSetup.transform.position = targetPosition.position;
+            Transform locomotion = playerSetup.transform.Find("Locomotion");
+            if (locomotion != null)
+            {
+                locomotion.gameObject.SetActive(false);
+            }
+
+            playerSetup.transform.SetParent(targetPosition);
+            playerSetup.transform.localPosition = Vector3.zero;
+            playerSetup.transform.localRotation = Quaternion.identity;
         }
     }
 }

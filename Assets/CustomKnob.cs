@@ -11,13 +11,9 @@ public class DoorAngleTracker : MonoBehaviour
 
     [Serializable]
     public class ValueChangeEvent : UnityEvent<float> { }
-
-    [SerializeField]
-    [Tooltip("Events to trigger when the knob is rotated")]
-    private ValueChangeEvent m_OnValueChange = new ValueChangeEvent();
-    public ValueChangeEvent onValueChange => m_OnValueChange;
-
     [SerializeField] private Vector3 rotationAxis = Vector3.up;
+
+    [SerializeField] private KnobToRotation receiver;
 
     [SerializeField]
     private bool useLimits = false;
@@ -85,9 +81,9 @@ public class DoorAngleTracker : MonoBehaviour
         totalAngle += delta;
         lastAngle = currentAngle;
 
-        m_OnValueChange.Invoke(delta);
+        receiver?.OnKnobValueChanged(delta);
 
-        Debug.Log($"Общий угол поворота: {totalAngle:F2}° delta: {delta}");
+        // Debug.Log($"Общий угол поворота: {totalAngle:F2}° delta: {delta}");
     }
 
     Vector3 forward;
@@ -109,7 +105,7 @@ public class DoorAngleTracker : MonoBehaviour
         }
 
         Vector3 projectedForward = Vector3.ProjectOnPlane(forward, axis).normalized;
-        Vector3 referenceForward = Vector3.ProjectOnPlane(transform.parent.forward, axis).normalized;
+        Vector3 referenceForward = Vector3.ProjectOnPlane(transform.parent.right, axis).normalized;
 
         if (projectedForward.magnitude < 0.01f || referenceForward.magnitude < 0.01f)
             return 0f;

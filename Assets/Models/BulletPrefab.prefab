@@ -163,9 +163,8 @@ GameObject:
   - component: {fileID: 3279137469545726659}
   - component: {fileID: 8985245424448844245}
   - component: {fileID: 3200369261532300791}
-  - component: {fileID: 7895143900296305557}
-  - component: {fileID: 1628887597776127595}
   - component: {fileID: 8194945051965903211}
+  - component: {fileID: -6583742281850561777}
   m_Layer: 0
   m_Name: BulletPrefab
   m_TagString: AmmoTrigger
@@ -273,37 +272,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
---- !u!114 &7895143900296305557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4714874016786212514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3285d21d1d58fa34b876d5042734f3bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: VRMP::XRMultiplayer.MiniGames.SlingshotProjectile
-  m_TrailRenderer: {fileID: 4004289578934484521}
-  m_Lifetime: 10
-  m_LifeTime: 10
-  m_Collider: {fileID: 0}
-  m_Rigidbody: {fileID: 3200369261532300791}
---- !u!114 &1628887597776127595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4714874016786212514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd6d9a65cb6c334092096811ec45edb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  impactParticles: {fileID: 65883282602412819, guid: de6f0891c3981cd4c902ddaa6bbf220b,
-    type: 3}
 --- !u!136 &8194945051965903211
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -327,3 +295,21 @@ CapsuleCollider:
   m_Height: 1.3713212
   m_Direction: 2
   m_Center: {x: 0, y: 0.014808552, z: 1.6323172}
+--- !u!114 &-6583742281850561777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714874016786212514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061244b9f90995d4b99c567f410fe788, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CollisionDetected
+  particleSystemExplotion: {fileID: 6580893200944691650, guid: de6f0891c3981cd4c902ddaa6bbf220b,
+    type: 3}
+  particleSystemSmoke: {fileID: 6580893200944691650, guid: de6f0891c3981cd4c902ddaa6bbf220b,
+    type: 3}
+  explosionRadius: 5
+  explosionForce: 1000

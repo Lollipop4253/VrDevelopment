@@ -254,6 +254,7 @@ GameObject:
   - component: {fileID: 53924015}
   - component: {fileID: 53924017}
   - component: {fileID: 53924016}
+  - component: {fileID: 53924018}
   m_Layer: 0
   m_Name: VerticalGuidanceBase
   m_TagString: Untagged
@@ -333,6 +334,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53924014}
   m_Mesh: {fileID: -3539946597544084056, guid: 7f92aa49fc2ed1a4b9425cf6076b228a, type: 3}
+--- !u!54 &53924018
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53924014}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &77290458
 GameObject:
   m_ObjectHideFlags: 0
@@ -2260,9 +2288,6 @@ GameObject:
   - component: {fileID: 386516668}
   - component: {fileID: 386516666}
   - component: {fileID: 386516670}
-  - component: {fileID: 386516673}
-  - component: {fileID: 386516672}
-  - component: {fileID: 386516671}
   m_Layer: 0
   m_Name: HorizontalGuidance
   m_TagString: Untagged
@@ -2409,84 +2434,6 @@ HingeJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!114 &386516671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 386516664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbca48dcf5363674d8a5676d81da60c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::KnobToRotation
-  targetObject: {fileID: 1441456814}
-  rotationAxis: {x: 0, y: 1, z: 0}
-  maxTargetAngle: 360
-  invertRotation: 0
-  RotationSpeed: 1
---- !u!114 &386516672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 386516664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbca48dcf5363674d8a5676d81da60c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::KnobToRotation
-  targetObject: {fileID: 1755151915}
-  rotationAxis: {x: 0, y: 1, z: 0}
-  maxTargetAngle: 360
-  invertRotation: 0
-  RotationSpeed: 1
---- !u!114 &386516673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 386516664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bff396809b0af5479eae4f450776d4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorAngleTracker
-  hingeJoint: {fileID: 386516670}
-  m_OnValueChange:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 386516672}
-        m_TargetAssemblyTypeName: KnobToRotation, Assembly-CSharp
-        m_MethodName: OnKnobValueChanged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 386516671}
-        m_TargetAssemblyTypeName: KnobToRotation, Assembly-CSharp
-        m_MethodName: OnKnobValueChanged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  rotationAxis: {x: 1, y: 0, z: 0}
-  useLimits: 0
-  maxAngle: 0
-  minAngle: 0
 --- !u!1 &391376822
 GameObject:
   m_ObjectHideFlags: 0
@@ -3360,7 +3307,7 @@ GameObject:
   - component: {fileID: 512272294}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3812,6 +3759,9 @@ GameObject:
   - component: {fileID: 541300011}
   - component: {fileID: 541300014}
   - component: {fileID: 541300013}
+  - component: {fileID: 541300015}
+  - component: {fileID: 541300017}
+  - component: {fileID: 541300016}
   m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
@@ -3881,10 +3831,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 541300015}
+        m_TargetAssemblyTypeName: CalculeteAbsoluteAngle, Assembly-CSharp
+        m_MethodName: enableVelocity
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 541300015}
+        m_TargetAssemblyTypeName: CalculeteAbsoluteAngle, Assembly-CSharp
+        m_MethodName: disableVelocity
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstFocusEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -4027,6 +4001,57 @@ FixedJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &541300015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541300009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d81c842e58d54c44a5af9fa56f3bf3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CalculeteAbsoluteAngle
+  hingeJoint: {fileID: 386516670}
+  updateThreshold: 0.5
+  receiver1: {fileID: 541300017}
+  receiver2: {fileID: 541300016}
+  useLimits: 0
+  maxAngle: 0
+  minAngle: 0
+--- !u!114 &541300016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541300009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbca48dcf5363674d8a5676d81da60c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KnobToRotation
+  targetObject: {fileID: 1441456814}
+  rotationAxis: {x: 0, y: 1, z: 0}
+  rotationSpeed: 0.05
+  invertRotation: 0
+--- !u!114 &541300017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541300009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbca48dcf5363674d8a5676d81da60c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KnobToRotation
+  targetObject: {fileID: 1755151915}
+  rotationAxis: {x: 0, y: 1, z: 0}
+  rotationSpeed: 0.05
+  invertRotation: 0
 --- !u!1 &552808872
 GameObject:
   m_ObjectHideFlags: 0
@@ -6378,6 +6403,38 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &801941207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 801941208}
+  m_Layer: 0
+  m_Name: pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &801941208
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801941207}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.742, y: 0.243, z: -0.001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 909647348}
+  m_Father: {fileID: 1441456814}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &805487229
 GameObject:
   m_ObjectHideFlags: 0
@@ -6819,6 +6876,9 @@ GameObject:
   - component: {fileID: 846567285}
   - component: {fileID: 846567284}
   - component: {fileID: 846567287}
+  - component: {fileID: 846567290}
+  - component: {fileID: 846567289}
+  - component: {fileID: 846567288}
   m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
@@ -6927,10 +6987,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 846567290}
+        m_TargetAssemblyTypeName: CalculeteAbsoluteAngle, Assembly-CSharp
+        m_MethodName: enableVelocity
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 846567290}
+        m_TargetAssemblyTypeName: CalculeteAbsoluteAngle, Assembly-CSharp
+        m_MethodName: disableVelocity
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstFocusEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -7015,9 +7099,9 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 0
-  m_LimitLinearVelocity: 0
+  m_LimitLinearVelocity: 1
   m_LimitAngularVelocity: 0
-  m_MaxLinearVelocityDelta: 5
+  m_MaxLinearVelocityDelta: 10
   m_MaxAngularVelocityDelta: 5
 --- !u!54 &846567286
 Rigidbody:
@@ -7063,6 +7147,57 @@ MonoBehaviour:
   shootForce: 50
   ammoPrefab: {fileID: 4714874016786212514, guid: 3e5fb9238c040434592073f6af346578,
     type: 3}
+--- !u!114 &846567288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846567281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbca48dcf5363674d8a5676d81da60c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KnobToRotation
+  targetObject: {fileID: 801941208}
+  rotationAxis: {x: 0, y: 0, z: 1}
+  rotationSpeed: 0.01
+  invertRotation: 0
+--- !u!114 &846567289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846567281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbca48dcf5363674d8a5676d81da60c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KnobToRotation
+  targetObject: {fileID: 579850728}
+  rotationAxis: {x: 0, y: 0, z: 1}
+  rotationSpeed: 0.01
+  invertRotation: 0
+--- !u!114 &846567290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846567281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d81c842e58d54c44a5af9fa56f3bf3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CalculeteAbsoluteAngle
+  hingeJoint: {fileID: 903100524}
+  updateThreshold: 0.1
+  receiver1: {fileID: 846567289}
+  receiver2: {fileID: 846567288}
+  useLimits: 1
+  maxAngle: 348
+  minAngle: -1550
 --- !u!1 &849510555
 GameObject:
   m_ObjectHideFlags: 0
@@ -7869,9 +8004,6 @@ GameObject:
   - component: {fileID: 903100522}
   - component: {fileID: 903100525}
   - component: {fileID: 903100524}
-  - component: {fileID: 903100527}
-  - component: {fileID: 903100526}
-  - component: {fileID: 903100528}
   m_Layer: 0
   m_Name: VerticalGuidance
   m_TagString: Untagged
@@ -7960,7 +8092,7 @@ HingeJoint:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 903100518}
   serializedVersion: 3
-  m_ConnectedBody: {fileID: 0}
+  m_ConnectedBody: {fileID: 53924018}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
@@ -8018,84 +8150,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &903100526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903100518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbca48dcf5363674d8a5676d81da60c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::KnobToRotation
-  targetObject: {fileID: 579850728}
-  rotationAxis: {x: 0, y: 0, z: 1}
-  maxTargetAngle: 360
-  invertRotation: 0
-  RotationSpeed: 0.015
---- !u!114 &903100527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903100518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bff396809b0af5479eae4f450776d4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CustomKnob
-  hingeJoint: {fileID: 903100524}
-  m_OnValueChange:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 903100526}
-        m_TargetAssemblyTypeName: KnobToRotation, Assembly-CSharp
-        m_MethodName: OnKnobValueChanged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 903100528}
-        m_TargetAssemblyTypeName: KnobToRotation, Assembly-CSharp
-        m_MethodName: OnKnobValueChanged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  rotationAxis: {x: 0, y: 1, z: 0}
-  useLimits: 1
-  maxAngle: 340
-  minAngle: -1480
---- !u!114 &903100528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903100518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbca48dcf5363674d8a5676d81da60c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::KnobToRotation
-  targetObject: {fileID: 909647348}
-  rotationAxis: {x: 0, y: 0, z: 1}
-  maxTargetAngle: 360
-  invertRotation: 0
-  RotationSpeed: 0.015
 --- !u!1 &906811464
 GameObject:
   m_ObjectHideFlags: 0
@@ -8156,15 +8210,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 909647347}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071067, w: 0.7071068}
-  m_LocalPosition: {x: -1.5223112, y: 0.2558512, z: -0.012358758}
-  m_LocalScale: {x: 0.05334808, y: 0.058637433, z: 0.060713954}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -0.704, y: -0.014, z: -0.012358553}
+  m_LocalScale: {x: 0.05334808, y: 0.058637436, z: 0.060713958}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 792322306}
   - {fileID: 1114753767}
-  m_Father: {fileID: 1441456814}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 801941208}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!114 &909647349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10798,7 +10852,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 909647348}
+  - {fileID: 801941208}
   m_Father: {fileID: 2146067118}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1441456815

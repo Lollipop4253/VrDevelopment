@@ -2,23 +2,23 @@ using UnityEngine;
 
 public class KnobToRotation : MonoBehaviour
 {
-    [SerializeField] private Transform targetObject;        // ������, ������� ����� ���������
-    [SerializeField] private Vector3 rotationAxis = Vector3.up; // ��� �������� (Y �� ���������)
-    [SerializeField] private float maxTargetAngle = 360f;   // �� ������� �������� ���������� ������� ������
-    [SerializeField] private bool invertRotation = false;   // ������������� �����������
-    [SerializeField] private float RotationSpeed = 0.5f;
+    [SerializeField] private Transform targetObject;
+    [SerializeField] private Vector3 rotationAxis = Vector3.up;
+    [SerializeField] private float rotationSpeed = 0.5f;
+    [SerializeField] private bool invertRotation = false;
 
-    public void OnKnobValueChanged(float knobValue)
+    private float accumulatedAngle = 0f;
+
+    public void OnKnobValueChanged(float knobAngle)
     {
         if (targetObject == null) return;
 
-        Debug.Log(knobValue);
+        float delta = knobAngle * rotationSpeed;
+        if (invertRotation) delta = -delta;
 
-        float currentAngel = targetObject.transform.eulerAngles.z;
+        accumulatedAngle += delta;
+        // Debug.Log($"Угол башни: {accumulatedAngle}");
 
-        float angle = currentAngel + knobValue * RotationSpeed;
-        if (invertRotation) angle = -angle;
-
-        targetObject.localRotation = Quaternion.Euler(rotationAxis * angle);
+        targetObject.localRotation = Quaternion.AngleAxis(accumulatedAngle, rotationAxis);
     }
 }

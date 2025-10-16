@@ -10,6 +10,7 @@ TagManager:
   - PlayerHand
   - Destroyer
   - AmmoTrigger
+  - Wall
   layers:
   - Default
   - TransparentFX
