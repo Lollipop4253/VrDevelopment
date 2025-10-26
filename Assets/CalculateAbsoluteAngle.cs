@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CalculeteAbsoluteAngle : MonoBehaviour
 {
-    public HingeJoint hingeJoint;
+    public HingeJoint hingeJoint; // test
 
     [SerializeField] float updateThreshold;
     [SerializeField] private KnobToRotation receiver1;
