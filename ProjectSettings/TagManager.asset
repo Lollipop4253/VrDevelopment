@@ -20,7 +20,10 @@ TagManager:
   - UI
   - Player
   - Mirror
+<<<<<<< HEAD
   - TargetBot
+=======
+>>>>>>> dfedd42dd06e3f80c5104bdc3314a8ea8724a950
   - 
   - 
   - 
@@ -57,4 +60,8 @@ TagManager:
   - Light Layer 4
   - Light Layer 5
   - Light Layer 6
+<<<<<<< HEAD
   - Light Layer 7
+=======
+  - Light Layer 7
+>>>>>>> dfedd42dd06e3f80c5104bdc3314a8ea8724a950
