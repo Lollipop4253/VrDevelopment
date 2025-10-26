@@ -1,0 +1,17 @@
+/*
+
+!/Assets/
+!/Packages/
+!/ProjectSettings/
+!.gitignore
+
+[Tt]emp/
+[Bb]uild/
+Library/
+Logs/
+obj/
+UserSettings/
+.vs/
+.idea/
+*.csproj
+*.sln
