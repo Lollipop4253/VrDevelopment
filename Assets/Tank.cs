@@ -24,6 +24,19 @@ public class Tank : MonoBehaviour
 
     private Rigidbody rb;
 
+    private bool engineRunning = false;
+
+    public void ToggleEngine()
+    {
+        engineRunning = !engineRunning;
+        if (!engineRunning)
+        {
+            // При выключении — останавливаем танк
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -43,7 +56,15 @@ public class Tank : MonoBehaviour
 
         float leftValue = leftLever.GetLeverValue();
         float rightValue = rightLever.GetLeverValue();
-        float speedValue = speedLever.ChangeTargetPosition(); // 👈 Теперь float от -1 до 1
+        float speedValue = 0;
+
+        if(engineRunning){
+            speedValue = speedLever.ChangeTargetPosition(); // 👈 Теперь float от -1 до 1
+        }
+        else{
+            speedValue = 0;
+        }
+        
 
         // Применяем мёртвую зону
         if (Mathf.Abs(leftValue) < deadZone) leftValue = 0f;
