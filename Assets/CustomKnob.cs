@@ -1,0 +1,119 @@
+using UnityEngine;
+using System;
+using UnityEngine.Events;
+using UnityEngine.XR.Interaction.Toolkit;
+
+public class DoorAngleTracker : MonoBehaviour
+{
+    public HingeJoint hingeJoint;
+    private float totalAngle = 0f;
+    private float lastAngle = 0f;
+
+    [Serializable]
+    public class ValueChangeEvent : UnityEvent<float> { }
+    [SerializeField] private Vector3 rotationAxis = Vector3.up;
+
+    [SerializeField] private KnobToRotation receiver;
+
+    [SerializeField]
+    private bool useLimits = false;
+    [SerializeField]
+    private float maxAngle;
+    [SerializeField]
+    private float minAngle;
+
+    void Start()
+    {
+        if (hingeJoint == null)
+            hingeJoint = GetComponent<HingeJoint>();
+
+        if (hingeJoint != null)
+        {
+            lastAngle = GetHingeAngle();
+            totalAngle = 0f;
+        }
+    }
+
+    void Update()
+    {
+        if (hingeJoint == null) return;
+        
+        JointLimits limits = hingeJoint.limits;
+
+        if (useLimits)
+        {
+            if (totalAngle >= maxAngle - 100)
+            {
+                hingeJoint.extendedLimits = true;
+                hingeJoint.useLimits = true;
+
+                limits.max = maxAngle;
+                limits.min = 0;
+                hingeJoint.limits = limits;
+            }
+            else if (totalAngle <= minAngle + 100)
+            {
+                hingeJoint.extendedLimits = true;
+                hingeJoint.useLimits = true;
+                
+                limits.max = 360 + (minAngle % 360);
+                limits.min = minAngle % 360;
+                hingeJoint.limits = limits; 
+            }
+            else
+            {
+                hingeJoint.useLimits = false;
+                hingeJoint.extendedLimits = false;
+
+                limits.max = 0;
+                limits.min = 0;
+                hingeJoint.limits = limits;
+            }
+        }
+
+        float currentAngle = GetHingeAngle();
+
+        float delta = currentAngle - lastAngle;
+
+        if (delta > 180f) delta -= 360f;
+        if (delta < -180f) delta += 360f;
+
+        totalAngle += delta;
+        lastAngle = currentAngle;
+
+        receiver?.OnKnobValueChanged(delta);
+
+        // Debug.Log($"Общий угол поворота: {totalAngle:F2}° delta: {delta}");
+    }
+
+    Vector3 forward;
+    float GetHingeAngle()
+    {
+        Vector3 axis = hingeJoint.axis.normalized;
+
+        if (rotationAxis == Vector3.right)
+        {
+            forward = transform.right;
+        }
+        else if (rotationAxis == Vector3.up)
+        {
+            forward = transform.up;
+        }
+        else if (rotationAxis == Vector3.forward)
+        {
+            forward = transform.forward;
+        }
+
+        Vector3 projectedForward = Vector3.ProjectOnPlane(forward, axis).normalized;
+        Vector3 referenceForward = Vector3.ProjectOnPlane(transform.parent.right, axis).normalized;
+
+        if (projectedForward.magnitude < 0.01f || referenceForward.magnitude < 0.01f)
+            return 0f;
+
+        float angle = Vector3.SignedAngle(referenceForward, projectedForward, axis);
+
+        if (angle < 0f) angle += 360f;
+
+        return angle;
+    }
+}
