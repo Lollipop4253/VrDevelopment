@@ -8,7 +8,7 @@ public class Tank : MonoBehaviour
     public CustomTransmissionLever speedLever;
 
     [Header("Movement Settings")]
-    public float moveSpeed = 50f;
+    public float baseMoveSpeed = 50f;
     public float turnSpeed = 30f;
     public float deadZone = 0.1f;
 
@@ -23,19 +23,12 @@ public class Tank : MonoBehaviour
     public float idleForwardSpeed = 0.3f;
 
     private Rigidbody rb;
-
     private bool engineRunning = false;
 
-    public void ToggleEngine()
-    {
-        engineRunning = !engineRunning;
-        if (!engineRunning)
-        {
-            // При выключении — останавливаем танк
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
-    }
+    // Состояния повреждений
+    private bool leftTrackDisabled = false;
+    private bool rightTrackDisabled = false;
+    private float globalSpeedMultiplier = 1f;
 
     void Start()
     {
@@ -43,6 +36,16 @@ public class Tank : MonoBehaviour
         if (rb == null)
         {
             Debug.LogError("Rigidbody not found on tank!");
+        }
+    }
+
+    public void ToggleEngine()
+    {
+        engineRunning = !engineRunning;
+        if (!engineRunning)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
     }
 
@@ -54,57 +57,47 @@ public class Tank : MonoBehaviour
             return;
         }
 
-        float leftValue = leftLever.GetLeverValue();
-        float rightValue = rightLever.GetLeverValue();
-        float speedValue = 0;
+        // Получаем "сырые" значения (уже с учётом deadZone и disabled)
+        float leftInput = leftTrackDisabled ? 0f : (Mathf.Abs(leftLever.GetLeverValue()) < deadZone ? 0f : leftLever.GetLeverValue());
+        float rightInput = rightTrackDisabled ? 0f : (Mathf.Abs(rightLever.GetLeverValue()) < deadZone ? 0f : rightLever.GetLeverValue());
 
-        if(engineRunning){
-            speedValue = speedLever.ChangeTargetPosition(); // 👈 Теперь float от -1 до 1
-        }
-        else{
-            speedValue = 0;
-        }
-        
+        float speedValue = engineRunning ? speedLever.ChangeTargetPosition() : 0f;
 
-        // Применяем мёртвую зону
-        if (Mathf.Abs(leftValue) < deadZone) leftValue = 0f;
-        if (Mathf.Abs(rightValue) < deadZone) rightValue = 0f;
-
-        Debug.Log($"Left Value: {leftValue:F2} | Right Value: {rightValue:F2} | Speed Lever: {speedValue:F2}");
-
-        // 🔴 ОСНОВНАЯ ЛОГИКА: если скорость == 0 — останавливаем
-        if (Mathf.Abs(speedValue) < 0.05f) // небольшой порог для центра
+        if (Mathf.Abs(speedValue) < 0.05f)
         {
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
             return;
         }
 
-        // 💡 Расчёт движения
-        float forwardSpeed = (leftValue + rightValue) * 0.5f * moveSpeed;
+        // Силы от гусениц
+        float leftForce = leftInput * baseMoveSpeed * globalSpeedMultiplier;
+        float rightForce = rightInput * baseMoveSpeed * globalSpeedMultiplier;
 
-        // Добавляем базовую скорость вперёд, если рычаги в мёртвой зоне
-        if (Mathf.Abs(leftValue) < deadZone && Mathf.Abs(rightValue) < deadZone)
+        // Поступательное движение
+        float forwardSpeed = (leftForce + rightForce) * 0.5f * speedValue;
+
+        // Поворот — напрямую от разницы сил
+        float turnSpeedValue = (rightForce - leftForce) * turnSpeed * 0.05f; // коэффициент подбери
+
+        // Отключаем idle, если гусеницы повреждены
+        if (Mathf.Abs(leftInput) < 0.01f && Mathf.Abs(rightInput) < 0.01f)
         {
-            forwardSpeed = idleForwardSpeed * moveSpeed;
+            if (!leftTrackDisabled && !rightTrackDisabled)
+            {
+                forwardSpeed = idleForwardSpeed * baseMoveSpeed * globalSpeedMultiplier * speedValue;
+            }
+            // Иначе — не даём idle
         }
 
-        // 🔄 НЕЛИНЕЙНАЯ ЧУВСТВИТЕЛЬНОСТЬ ПОВОРОТА
-        float turnDiff = rightValue - leftValue;
-        float turnSpeedValue = Mathf.Sign(turnDiff) * Mathf.Pow(Mathf.Abs(turnDiff), 1.5f) * turnSpeed;
-
-        // Применяем ускорение вперёд/назад от третьего рычага
-        forwardSpeed *= speedValue; // 👈 Умножаем на -1..1
-
-        Debug.Log($"Forward Force: {forwardSpeed:F2} | Turn Torque: {turnSpeedValue:F2}");
-
+        // Применяем
         rb.AddForce(-transform.right * forwardSpeed, ForceMode.Force);
         rb.AddTorque(Vector3.up * turnSpeedValue, ForceMode.Force);
 
-        // Ограничения
-        if (rb.linearVelocity.magnitude > maxSpeed)
+        float currentMaxSpeed = maxSpeed * globalSpeedMultiplier;
+        if (rb.linearVelocity.magnitude > currentMaxSpeed)
         {
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+            rb.linearVelocity = rb.linearVelocity.normalized * currentMaxSpeed;
         }
 
         if (rb.angularVelocity.magnitude > maxAngularSpeed)
@@ -112,12 +105,54 @@ public class Tank : MonoBehaviour
             rb.angularVelocity = rb.angularVelocity.normalized * maxAngularSpeed;
         }
 
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
-        // Замедление при нейтральных рычагах
-        if (Mathf.Abs(leftValue) < deadZone && Mathf.Abs(rightValue) < deadZone)
+        if (Mathf.Abs(leftInput) < deadZone && Mathf.Abs(rightInput) < deadZone)
         {
             rb.angularVelocity *= angularDampingFactor;
         }
+    }
+
+    // === ПОВРЕЖДЕНИЯ ЧЕРЕЗ INVOKE ===
+
+    public void ApplyTrackDamage(string trackSide, float duration)
+    {
+        if (trackSide == "Left")
+        {
+            leftTrackDisabled = true;
+            Invoke(nameof(RestoreLeftTrack), duration);
+        }
+        else if (trackSide == "Right")
+        {
+            rightTrackDisabled = true;
+            Invoke(nameof(RestoreRightTrack), duration);
+        }
+        else
+        {
+            Debug.LogWarning("Invalid track side. Use 'Left' or 'Right'.");
+        }
+    }
+
+    public void ApplyGlobalSlow(float speedMultiplier, float duration)
+    {
+        globalSpeedMultiplier = Mathf.Clamp01(speedMultiplier);
+        Invoke(nameof(RestoreGlobalSpeed), duration);
+    }
+
+    // === ВОССТАНОВЛЕНИЕ ===
+
+    void RestoreLeftTrack()
+    {
+        leftTrackDisabled = false;
+    }
+
+    void RestoreRightTrack()
+    {
+        rightTrackDisabled = false;
+    }
+
+    void RestoreGlobalSpeed()
+    {
+        globalSpeedMultiplier = 1f;
     }
 }

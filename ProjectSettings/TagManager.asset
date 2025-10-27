@@ -11,6 +11,11 @@ TagManager:
   - Destroyer
   - AmmoTrigger
   - Wall
+  - HullCollider
+  - TurretCollider
+  - GunCollider
+  - LeftTrackCollider
+  - RightTrackCollider
   layers:
   - Default
   - TransparentFX
@@ -21,7 +26,6 @@ TagManager:
   - Player
   - Mirror
   - TargetBot
-  - 
   - 
   - 
   - 

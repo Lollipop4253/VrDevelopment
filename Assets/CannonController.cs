@@ -15,33 +15,33 @@ public class CannonController : MonoBehaviour
     {
         if (shootPoint == null)
         {
-            Debug.LogWarning("ShootPoint not assigned. Using Shooter's transform.");
+            //Debug.LogWarning("ShootPoint not assigned. Using Shooter's transform.");
             shootPoint = transform;
         }
 
         if (ammoPrefab == null)
         {
-            Debug.LogError("Ammo Prefab is not assigned!");
+            //Debug.LogError("Ammo Prefab is not assigned!");
         }
     }
 
     public void TryShoot()
     {
-        Debug.Log("Попытка выстрела...");
+        //Debug.Log("Попытка выстрела...");
 
         if (!ammoPlatform.HasAmmo())
         {
-            Debug.Log("❌ Нет снаряда на платформе (не заряжено).");
+            //Debug.Log("❌ Нет снаряда на платформе (не заряжено).");
             return;
         }
 
         if (ammoPrefab == null)
         {
-            Debug.LogError("Ammo Prefab не назначен!");
+            //Debug.LogError("Ammo Prefab не назначен!");
             return;
         }
 
-        Debug.Log("💥 Создаём снаряд из префаба!");
+        //Debug.Log("💥 Создаём снаряд из префаба!");
         GameObject newAmmo = Instantiate(ammoPrefab, shootPoint.position, shootPoint.rotation);
         newAmmo.transform.position += shootPoint.forward * 0.1f;
 
@@ -53,7 +53,7 @@ public class CannonController : MonoBehaviour
 
     private void ShootAmmo(GameObject ammo)
     {
-        Debug.Log($"💥 Выстрел! Снаряд: {ammo.name}");
+        //Debug.Log($"💥 Выстрел! Снаряд: {ammo.name}");
 
         Rigidbody rb = ammo.GetComponent<Rigidbody>();
         if (rb == null)
@@ -65,7 +65,7 @@ public class CannonController : MonoBehaviour
         rb.isKinematic = false;
         rb.linearVelocity = shootPoint.forward * shootForce;
 
-        Debug.Log($"🚀 Скорость снаряда: {rb.linearVelocity}");
+        //Debug.Log($"🚀 Скорость снаряда: {rb.linearVelocity}");
         Debug.DrawRay(shootPoint.position, shootPoint.forward * 5f, Color.red, 2f); 
     }
 
@@ -77,7 +77,7 @@ public class CannonController : MonoBehaviour
 
         if (triggerSphere != null)
         {
-            Debug.Log($"💥 Удаляем триггер-сферу: {triggerSphere.name}");
+            //Debug.Log($"💥 Удаляем триггер-сферу: {triggerSphere.name}");
             Destroy(triggerSphere);
 
             // Сбрасываем состояние платформы
@@ -85,7 +85,7 @@ public class CannonController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("⚠️ Нет активной сферы-триггера для удаления.");
+            //Debug.LogWarning("⚠️ Нет активной сферы-триггера для удаления.");
         }
     }
 }

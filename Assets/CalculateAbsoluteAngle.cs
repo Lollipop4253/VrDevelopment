@@ -64,7 +64,7 @@ public class CalculeteAbsoluteAngle : MonoBehaviour
                     limits.max = maxAngle;
                     limits.min = 0;
                     hingeJoint.limits = limits;
-                    Debug.Log("1");
+                    //Debug.Log("1");
                 }
                 else if (globalAngle <= minAngle + 100)
                 {
@@ -74,7 +74,7 @@ public class CalculeteAbsoluteAngle : MonoBehaviour
                     limits.max = 360 + (minAngle % 360);
                     limits.min = minAngle % 360;
                     hingeJoint.limits = limits;
-                    Debug.Log("2");
+                    //Debug.Log("2");
                 }
                 else
                 {
@@ -84,7 +84,7 @@ public class CalculeteAbsoluteAngle : MonoBehaviour
                     limits.max = 0;
                     limits.min = 0;
                     hingeJoint.limits = limits;
-                    Debug.Log("3");
+                    //Debug.Log("3");
                 }
             }
 
@@ -116,7 +116,7 @@ public class CalculeteAbsoluteAngle : MonoBehaviour
             }
             lastAngle = currentAngle;
 
-            Debug.Log($"{globalAngle} {reverse} {delta}");
+            //Debug.Log($"{globalAngle} {reverse} {delta}");
         }
     }
 
